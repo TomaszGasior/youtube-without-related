@@ -24,13 +24,13 @@ final class _YTPWREL
 
 	public function hook__embed_oembed_html($html, $url)
 	{
-		$this->used = true;
-
 		// Only work with HTML markup of YouTube embed.
 		$domains = ['youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be'];
 		if (false === in_array(parse_url($url, PHP_URL_HOST), $domains)) {
 			return $html;
 		}
+
+		$this->used = true;
 
 		// Operate on <iframe> using DOM document.
 		$document = DOMDocument::loadHTML(
