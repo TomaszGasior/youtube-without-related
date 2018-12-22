@@ -18,6 +18,9 @@ final class _YTPWREL
 
 		add_filter('embed_oembed_html', [$ytpwrel, 'hook__embed_oembed_html'], 10, 2);
 		add_action('wp_footer', [$ytpwrel, 'hook__wp_footer']);
+
+		// Dirty hack.
+		add_filter('script_loader_src', [$ytpwrel, 'hook__script_loader_src']);
 	}
 
 	private function __construct() {}
@@ -73,6 +76,31 @@ final class _YTPWREL
 
 		// Details here: https://developers.google.com/youtube/iframe_api_reference
 		wp_enqueue_script('ytpwrel-yt-api', 'https://www.youtube.com/iframe_api');
+	}
+
+	public function hook__script_loader_src($src)
+	{
+		// For some reason there is collision between FitVids.js (http://fitvidsjs.com/) and YTPWREL
+		// script. YouTube player shows error instead of video when both scripts are loaded on
+		// the webpage. Following dirty code tries to disable FitVids if it's used by current theme.
+		if (false === stripos($src, 'fitvid')) {
+			return $src;
+		}
+
+		remove_filter('script_loader_src', [$ytpwrel, 'hook__script_loader_src']);
+		add_filter('wp_head', function(){
+			?>
+				<script>
+					if (window.jQuery || window.Zepto) {
+						(window.jQuery || window.Zepto).fn.fitVids = function(){
+							console.log('FitVids.js disabled by YTPWREL');
+						};
+					}
+				</script>
+			<?php
+		}, 9999);
+
+		return $src;
 	}
 }
 
