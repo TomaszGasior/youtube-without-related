@@ -55,10 +55,10 @@ final class _YTPWREL
 		$src_url = str_replace($old_query_string, $new_query_string, $src_url);
 		$iframe->setAttribute('src', $src_url);
 
-		// Return new <iframe> markup wrapped in <div> with custom CSS class.
+		// Return new <iframe> markup wrapped in <span> with custom CSS class.
 		// It's needed for inline JS script.
 		$html = $document->saveHTML($iframe);
-		return '<div class="ytpwrel-wrapper">' . $html . '</div>';
+		return '<span class="ytpwrel-wrapper">' . $html . '</span>';
 	}
 
 	public function hook__wp_footer()
