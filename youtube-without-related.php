@@ -52,6 +52,7 @@ final class _YTPWREL
 		$query_params['enablejsapi'] = '1';
 		$query_params['iv_load_policy'] = '3';
 		$query_params['rel'] = '0';
+		$query_params['fs'] = '0';
 		$query_params['origin'] = site_url();
 
 		// Update URL in <iframe src="...">.
