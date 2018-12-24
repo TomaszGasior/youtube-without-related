@@ -4,7 +4,7 @@
  * Description: Don't show related videos in embedded YouTube player. This plugin shows black overlay above player when video is stopped or paused.
  * Author: Tomasz Gąsior
  * Author URI: https://tomaszgasior.pl
- * Version: 2018-12-22
+ * Version: 2018-12-24
  * License: MIT
  */
 
